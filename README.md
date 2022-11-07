@@ -2,9 +2,10 @@
 
 1. Maak eerst HTML (index.html), css (styles.css) en javascript(main || app.js) bestand aan in de map scr
 2. koppel de bestanden. link tag voor css en script tag met `<script defer type="module" src="main.js"></script>` voor javascript
-3. npm init aanmaken --> entry point goed checken
-4. npm install --save-dev parcel
-5. npm install jest --save-dev 
+3. `npm init` --> entry point goed checken
+4. `npm install --save-dev parcel`
+5. `npm install jest --save-dev` 
+6. `npm install `axios` --> boven javascript bestand `import axios from 'axios'`;
 6. scripts toevoegen: "test": "npx jest",
    "test:watch": "npx jest --watch",
    "start": "parcel scr/index.html",
@@ -12,8 +13,8 @@
 7. .gitignore file aanmaken : /.idea
    /node_modules
    /.parcel-cache
-8. git init (bij nieuwe projecten)
-9. applicatie kan je met "npm run start" starten
+8. `git init` (bij nieuwe projecten)
+9. applicatie kan je met `npm run start` starten
 
 ----------------- hoe te testen -------------
 
