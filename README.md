@@ -13,6 +13,7 @@
 7. .gitignore file aanmaken : /.idea
    /node_modules
    /.parcel-cache
+   /dist
 8. `git init` (bij nieuwe projecten)
 9. applicatie kan je met `npm run start` starten
 
