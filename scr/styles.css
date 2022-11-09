@@ -9,6 +9,7 @@
     --background-color-country-section: var(--hookers-green);
     --background-color-country: var(--silver);
     --background-color-title: var(--dark-slate-gray);
+    --background-color-header: var(--charcoal);
     --border-radius: 5px;
     --europe: hsl(47.23,100%,60.39%);
     --asia: hsl(354.05,58.74%,56.27%);
@@ -42,7 +43,17 @@ body {
     width: 100%;
 }
 
+.linkToSearchpage {
+    text-align: center;
+    background-color: var(--background-color-header);
+    color: var(--silver);
+    position: sticky;
+    top:0;
+}
 
+.linkToSearchpage a {
+    color: white;
+}
 .header {
     display: flex;
     flex-direction: column;
