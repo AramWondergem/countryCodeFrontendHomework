@@ -1,6 +1,7 @@
 // todo importing the data from world api
 import axios from "axios";
 
+// functie voor ophalen data all countries
 (async function fetchData () {
     try {
         const countriesData = await axios.get('https://restcountries.com/v3.1/all');
@@ -51,6 +52,83 @@ import axios from "axios";
 
 
     } catch (e){
-
+    //todo uitzonderingen toevoegen
     }
 })()
+
+//function for fetching data for the search function
+function listingElementsCurrenciesAndLanguages(array) {
+    if(array.length===1){
+        return array[0].name;
+    } else {
+        let stringPlaceholder = array[0].name
+        for (let i = 1; i < array.length; i++) {
+            if (i===(array.length-1)) {
+                stringPlaceholder += " en " + array[i].name;
+            } else {
+                stringPlaceholder += ", " + array[i].name;
+            }
+        }
+        return stringPlaceholder;
+    }
+}
+async function fetchDataSearch () { // todo countryName weer toevoegen
+    try {
+        const testCountryname = 'peru'
+        const countryName = testCountryname;
+        const dataOneCountry = await axios.get(`https://restcountries.com/v2/name/${countryName}`,{
+            params: {
+              fields: 'flags,name,region,population,capital,currencies,languages'
+            }
+        })
+        console.log(dataOneCountry);
+
+        dataOneCountry.data.map((countryOne) => {
+            const {flags, name, capital, region, population, currencies,languages} = countryOne;
+            const countryBox = document.getElementById('country-box');
+
+        })
+
+
+
+
+
+
+
+
+    } catch (e) {
+
+    }
+
+}
+
+const searchField = document.getElementById('country-searching-field');
+const button = document.getElementById('search-button');
+
+button.addEventListener('click',()=> {
+    if (searchField.value!=="") {
+        fetchDataSearch(searchField.value);
+        searchField.value = '';
+    }
+
+})
+
+searchField.addEventListener("keydown", (event) =>{
+
+    if(event.code==="Enter") {
+
+
+
+        if (searchField.value!=="") {
+            fetchDataSearch(searchField.value);
+            searchField.value = '';
+        }
+    }
+});
+
+
+
+
+
+
+
