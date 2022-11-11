@@ -41,6 +41,7 @@ body {
 
 .imagewrapper img {
     width: 100%;
+
 }
 
 .linkToSearchpage {
@@ -163,3 +164,71 @@ h1 {
     background-color: var(--south-america);
 }
 
+.innerbox__search {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+
+}
+
+
+.country-box {
+
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.wrapper-country-article {
+    flex: 0 1 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:30px;
+    background-color: var(--background-color-country-section);
+    padding:30px;
+    border-radius: var(--border-radius);
+}
+.country-box__article {
+
+    background-color: var(--background-color-country);
+    padding: 30px;
+    border-radius: var(--border-radius);
+
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+
+}
+
+.country-box__image-and-title-wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.country-box__image-and-title-wrapper .imagewrapper {
+    flex: 0 0 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.country-box__image-and-title-wrapper h2 {
+    padding: 0 30px;
+}
+
+/*.country-box-article ul {*/
+/*    position: absolute;*/
+/*}*/
+
+.country-box__article li {
+    position: relative;
+    left: 30px;
+}
