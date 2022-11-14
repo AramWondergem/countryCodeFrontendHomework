@@ -22,7 +22,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    /*border: 1px solid black;*/
+    /*border: 1px solid white;*/
 }
 body {
     background-color: var(--background-color-body);
@@ -164,13 +164,60 @@ h1 {
     background-color: var(--south-america);
 }
 
+
+
 .innerbox__search {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    min-height: 80vh;
+}
 
+.gif-searchfield {
 
+    flex: 0 1 60vh;
+    padding: 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.innerbox__search img {
+    border-radius: var(--border-radius);
+}
+
+.searchfield-button-wrapper {
+
+    flex: 0 0 40px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.searchfield-button-wrapper input {
+    flex: 0 0 350px;
+
+    padding: 0.5em 2em;
+
+    border-bottom-left-radius: 90px 90px;
+    border-top-left-radius: 90px 90px;
+font-size: 1rem;
+
+}
+
+.searchfield-button-wrapper button {
+    border-bottom-right-radius: 90px 90px;
+    border-top-right-radius: 90px 90px;
+    padding: 0.5em;
+    background-color: var(--silver);
+    font-size: 1.5rem;
+}
+
+.searchfield-button-wrapper button:hover {
+    background-color: var(--dark-slate-gray);
 }
 
 
@@ -224,9 +271,6 @@ h1 {
     padding: 0 30px;
 }
 
-/*.country-box-article ul {*/
-/*    position: absolute;*/
-/*}*/
 
 .country-box__article li {
     position: relative;

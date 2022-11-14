@@ -4,18 +4,16 @@ import {domainToUnicode} from "url";
 
 const countrySection = document.getElementById('container-country-information');
 
-const searchField = document.getElementById('country-searching-field');
-let searchFieldValuePlaceholder = '';
-const button = document.getElementById('search-button');
+
 
 // functie voor ophalen data all countries
 (async function fetchData() {
     try {
         const countriesData = await axios.get('https://restcountries.com/v3.1/all'); //todo all weer terug zetten
-        console.log(countriesData)
-        countriesData.data.sort((a, b) => a.population - b.population);
 
-        countriesData.data.map((entryData) => {
+        countriesData.data.sort((a, b) => a.population - b.population); // sorting the countries from low to high on population
+
+        countriesData.data.map((entryData) => { //creating HTML elements and putting data in them
 
             const {name: {common}, flags: {png}, population, continents} = entryData;
             const [mainContinent, ...rest] = continents;
@@ -71,7 +69,7 @@ const button = document.getElementById('search-button');
     }
 })()
 
-//function for fetching data for the search function
+// function for turning the information about currencies and languages in a nice presentable string
 function listingElementsCurrenciesAndLanguages(array) {
     if (array.length === 1) {
         return array[0].name;
@@ -88,6 +86,11 @@ function listingElementsCurrenciesAndLanguages(array) {
     }
 }
 
+const searchField = document.getElementById('country-searching-field');
+let searchFieldValuePlaceholder = ''; //To store the value of the searchfield until enter or search is hit again
+const button = document.getElementById('search-button');
+
+//function for fetching data for the search function
 async function fetchDataSearch(countryName) {
     try {
         const dataOneCountry = await axios.get(`https://restcountries.com/v2/name/${countryName}`, {
@@ -95,18 +98,17 @@ async function fetchDataSearch(countryName) {
                 fields: 'flags,name,region,population,capital,currencies,languages'
             }
         })
-        console.log(dataOneCountry);
 
         const sectionCountries = document.getElementById('country-box');
         const divWrapper = document.createElement('div');
         divWrapper.setAttribute('class', 'wrapper-country-article');
 
-        sectionCountries.textContent = "";
+        sectionCountries.textContent = ""; //removing all child elements from the previous search
 
         sectionCountries.appendChild(divWrapper);
 
 
-        dataOneCountry.data.map((countryOne) => {
+        dataOneCountry.data.map((countryOne) => { // creating elements and filling them with content
             const {flags: {png}, name, capital, region, population, currencies, languages} = countryOne;
 
             // constructing the html
@@ -138,7 +140,6 @@ async function fetchDataSearch(countryName) {
             countryBoxImageAdnTitleWrapper.appendChild(countryNameh2);
 
             const imageFlag = document.createElement('img');
-            console.log(png)
             imageFlag.setAttribute('src', png);
             imageFlag.setAttribute('alt', '')
 
@@ -180,6 +181,8 @@ async function fetchDataSearch(countryName) {
 
         const errorMessage = document.createElement('h2')
 
+        errorMessage.textContent = `Computer says "no". Good luck with your life`
+
         if (status === 404) {
             errorMessage.textContent = `"${searchFieldValuePlaceholder}" is not (part of) a country name`;
 
@@ -207,7 +210,7 @@ async function fetchDataSearch(countryName) {
 }
 
 
-    button.addEventListener('click', () => {
+    button.addEventListener('click', () => { // click event for searchfield button
         if (searchField.value !== "") {
             fetchDataSearch(searchField.value);
             searchFieldValuePlaceholder = searchField.value
@@ -216,7 +219,7 @@ async function fetchDataSearch(countryName) {
 
     })
 
-    searchField.addEventListener("keydown", (event) => {
+    searchField.addEventListener("keydown", (event) => {// enter event for searchfield
 
         if (event.code === "Enter") {
 
@@ -227,7 +230,6 @@ async function fetchDataSearch(countryName) {
             }
         }
     });
-
 
 
 

@@ -7,23 +7,37 @@
     <title>Search engine for information about countries</title>
 </head>
 <body>
-<h2 class="linkToSearchpage">
-    <!--    todo make event listener for the whole top bar-->
-    Click <a href="index.html">
-    <emp>here</emp>
-</a> to see the basic information of all countries!
+<h2 class="linkToSearchpage">Click <a href="index.html"><emp>here</emp></a> to see the basic information of all countries!
 </h2>
 
 <div class="outerbox">
     <div class="innerbox innerbox__search">
 
-        <input placeholder="For example Netherlands or Peru" type="text" name="country-searching-field"
-               id="country-searching-field">
-        <button type="button" id="search-button">search</button>
+        <div class="gif-searchfield wrapper">
+            <div class="imagewrapper">
+                <img src="assets/earth.gif" alt="Spinning globe with face">
+            </div>
 
+            <div class="searchfield-button-wrapper">
+            <input placeholder="For example Netherlands or Peru" type="text" name="country-searching-field"
+                   id="country-searching-field">
+            <button type="button" id="search-button">search</button>
+            </div>
+        </div>
 
-
-            <section class="country-box" id="country-box"></section>
+        <section class="country-box" id="country-box">
+            <!--    <article class="country-box__article">-->
+            <!--        <div class="country-box__image-and-title-wrapper">-->
+            <!--            <div class="imagewrapper"><img src="assets/Flag_of_the_Netherlands.svg" alt=""></div>-->
+            <!--            <h2></h2>-->
+            <!--        </div>-->
+            <!--        <p></p>-->
+            <!--        <h3></h3>-->
+            <!--        <ul>-->
+            <!--            <li></li>-->
+            <!--        </ul>-->
+            <!--    </article>-->
+        </section>
 
     </div>
 </div>
@@ -32,14 +46,3 @@
 </body>
 </html>
 
-<!--    <article class="country-box__article">-->
-<!--        <div class="country-box__image-and-title-wrapper">-->
-<!--            <div class="imagewrapper"><img src="assets/Flag_of_the_Netherlands.svg" alt=""></div>-->
-<!--            <h2></h2>-->
-<!--        </div>-->
-<!--        <p></p>-->
-<!--        <h3></h3>-->
-<!--        <ul>-->
-<!--            <li></li>-->
-<!--        </ul>-->
-<!--    </article>-->
