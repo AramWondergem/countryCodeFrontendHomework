@@ -1,27 +1,31 @@
-// todo importing the data from world api
+// importing the data from world api
 import axios from "axios";
 import {domainToUnicode} from "url";
 
+const countrySection = document.getElementById('container-country-information');
+
+const searchField = document.getElementById('country-searching-field');
+let searchFieldValuePlaceholder = '';
+const button = document.getElementById('search-button');
+
 // functie voor ophalen data all countries
-(async function fetchData () {
+(async function fetchData() {
     try {
-        const countriesData = await axios.get('https://restcountries.com/v3.1/all');
+        const countriesData = await axios.get('https://restcountries.com/v3.1/all'); //todo all weer terug zetten
         console.log(countriesData)
-        countriesData.data.sort((a,b) =>  a.population - b.population);
+        countriesData.data.sort((a, b) => a.population - b.population);
 
         countriesData.data.map((entryData) => {
 
-            const{ name: { common }, flags:{ png }, population, continents} = entryData;
-            const[mainContinent, ...rest] = continents;
-
-            const countrySection = document.getElementById('container-country-information')
+            const {name: {common}, flags: {png}, population, continents} = entryData;
+            const [mainContinent, ...rest] = continents;
 
             const country = document.createElement("article");
             country.setAttribute("class", "country");
             countrySection.appendChild(country);
 
             const flagAndTitleWrapper = document.createElement('div');
-            flagAndTitleWrapper.setAttribute('class','flag-and-title-wrapper');
+            flagAndTitleWrapper.setAttribute('class', 'flag-and-title-wrapper');
 
             const p = document.createElement('p');
 
@@ -31,10 +35,10 @@ import {domainToUnicode} from "url";
             country.appendChild(p)
 
             const imageWrapper = document.createElement('div');
-            imageWrapper.setAttribute('class','imagewrapper');
+            imageWrapper.setAttribute('class', 'imagewrapper');
 
             const h2 = document.createElement("h2");
-            h2.setAttribute('class',mainContinent);
+            h2.setAttribute('class', mainContinent);
 
             h2.textContent = common;
 
@@ -48,23 +52,33 @@ import {domainToUnicode} from "url";
             imageWrapper.appendChild(flag);
 
 
-
         })
 
 
-    } catch (e){
-    //todo uitzonderingen toevoegen
+    } catch (e) {
+        const {status, statusText} = e.response;
+
+        const errorMessage = document.createElement('h2')
+
+        if (status === 404) {
+            errorMessage.textContent = `Country data is missing. ${status}:${statusText}`;
+        }else if (status === 500) {
+            errorMessage.textContent = `${status}:${statusText}`
+        }
+
+        countrySection.appendChild(errorMessage);
+
     }
 })()
 
 //function for fetching data for the search function
 function listingElementsCurrenciesAndLanguages(array) {
-    if(array.length===1){
+    if (array.length === 1) {
         return array[0].name;
     } else {
         let stringPlaceholder = array[0].name
         for (let i = 1; i < array.length; i++) {
-            if (i===(array.length-1)) {
+            if (i === (array.length - 1)) {
                 stringPlaceholder += " en " + array[i].name;
             } else {
                 stringPlaceholder += ", " + array[i].name;
@@ -73,11 +87,12 @@ function listingElementsCurrenciesAndLanguages(array) {
         return stringPlaceholder;
     }
 }
-async function fetchDataSearch (countryName) { // todo countryName weer toevoegen
+
+async function fetchDataSearch(countryName) {
     try {
-        const dataOneCountry = await axios.get(`https://restcountries.com/v2/name/${countryName}`,{
+        const dataOneCountry = await axios.get(`https://restcountries.com/v2/name/${countryName}`, {
             params: {
-              fields: 'flags,name,region,population,capital,currencies,languages'
+                fields: 'flags,name,region,population,capital,currencies,languages'
             }
         })
         console.log(dataOneCountry);
@@ -86,18 +101,19 @@ async function fetchDataSearch (countryName) { // todo countryName weer toevoege
         const divWrapper = document.createElement('div');
         divWrapper.setAttribute('class', 'wrapper-country-article');
 
+        sectionCountries.textContent = "";
+
         sectionCountries.appendChild(divWrapper);
 
 
         dataOneCountry.data.map((countryOne) => {
-            const {flags: { png }, name, capital, region, population, currencies,languages} = countryOne;
+            const {flags: {png}, name, capital, region, population, currencies, languages} = countryOne;
 
             // constructing the html
 
 
-
             const countryBoxArticle = document.createElement('article');
-            countryBoxArticle.setAttribute('class','country-box__article');
+            countryBoxArticle.setAttribute('class', 'country-box__article');
 
             divWrapper.appendChild(countryBoxArticle);
 
@@ -130,7 +146,7 @@ async function fetchDataSearch (countryName) { // todo countryName weer toevoege
 
             const nameLI = document.createElement('li');
             const capitalLI = document.createElement('li');
-            const regionLI= document.createElement('li');
+            const regionLI = document.createElement('li');
             const populationLI = document.createElement('li');
             const currenciesLI = document.createElement('li');
             const languagesLI = document.createElement('li');
@@ -141,8 +157,6 @@ async function fetchDataSearch (countryName) { // todo countryName weer toevoege
             unorderedInformationCountry.appendChild(populationLI)
             unorderedInformationCountry.appendChild(currenciesLI)
             unorderedInformationCountry.appendChild(languagesLI)
-
-
 
 
             countryNameh2.textContent = name;
@@ -160,39 +174,60 @@ async function fetchDataSearch (countryName) { // todo countryName weer toevoege
         })
 
 
-
-
-
-
-
-
     } catch (e) {
 
-    }
+        const {status, statusText} = e.response;
 
+        const errorMessage = document.createElement('h2')
+
+        if (status === 404) {
+            errorMessage.textContent = `"${searchFieldValuePlaceholder}" is not (part of) a country name`;
+
+        } else if (status === 500) {
+            errorMessage.textContent = `${status}:${statusText}`
+        }
+
+        const sectionCountries = document.getElementById('country-box');
+        const divWrapper = document.createElement('div');
+        divWrapper.setAttribute('class', 'wrapper-country-article');
+
+        sectionCountries.textContent = "";
+        sectionCountries.appendChild(divWrapper);
+
+        const countryBoxArticle = document.createElement('article');
+        countryBoxArticle.setAttribute('class', 'country-box__article');
+
+        divWrapper.appendChild(countryBoxArticle);
+
+
+        countryBoxArticle.appendChild(errorMessage);
+
+
+    }
 }
 
-const searchField = document.getElementById('country-searching-field');
-const button = document.getElementById('search-button');
 
-button.addEventListener('click',()=> {
-    if (searchField.value!=="") {
-        fetchDataSearch(searchField.value);
-        searchField.value = '';
-    }
-
-})
-
-searchField.addEventListener("keydown", (event) =>{
-
-    if(event.code==="Enter") {
-
-        if (searchField.value!=="") {
+    button.addEventListener('click', () => {
+        if (searchField.value !== "") {
             fetchDataSearch(searchField.value);
+            searchFieldValuePlaceholder = searchField.value
             searchField.value = '';
         }
-    }
-});
+
+    })
+
+    searchField.addEventListener("keydown", (event) => {
+
+        if (event.code === "Enter") {
+
+            if (searchField.value !== "") {
+                fetchDataSearch(searchField.value);
+                searchFieldValuePlaceholder = searchField.value
+                searchField.value = '';
+            }
+        }
+    });
+
 
 
 
